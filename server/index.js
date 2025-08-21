@@ -13,7 +13,10 @@ app.use(express.json());
 app.use('/api/website/enquiry', enquiryRouter);
 
 // Connect to MongoDB (only once)
-mongoose.connect(process.env.DBURL)
+mongoose.connect(process.env.DBURL,{
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
   .then(() => {
     console.log("connected to mongodb");
   })
