@@ -5,7 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 
 export default function EnquiryList({data,getAllEnquiry,Swal,setFormData}) {
     let editRow = (editid)=>{
-          axios.get(`http://localhost:8000/api/website/enquiry/update/${editid}`)
+          axios.get(`https://backendcurd-u9li.onrender.com${editid}`)
           .then((res)=>{
             let data = res.data
             setFormData(data.enquiry);
@@ -21,7 +21,7 @@ export default function EnquiryList({data,getAllEnquiry,Swal,setFormData}) {
             }).then((result) => {
              
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:8000/api/website/enquiry/delete/${delid}`)
+                axios.delete(`https://backendcurd-u9li.onrender.com${delid}`)
                 .then((res)=>{
                     console.log(res.data);
                     toast.success("Enquiry deleted successfully");
