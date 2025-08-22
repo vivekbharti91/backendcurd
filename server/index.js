@@ -1,36 +1,34 @@
-let express = require('express');
-let mongoose = require('mongoose');
-let cors = require('cors');
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
 const enquiryRouter = require('./App/routes/web/enquiryRoutes');
 require('dotenv').config();
 
-let app = express();
+const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
 // Routes
 app.use('/api/website/enquiry', enquiryRouter);
 
-// Connect to MongoDB (only once)
-mongoose.connect(process.env.DBURL,{
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+// Connect to MongoDB
+mongoose.connect(process.env.DBURL)
   .then(() => {
-    console.log("connected to mongodb");
+    console.log(" Connected to MongoDB");
   })
   .catch((err) => {
-    console.log("error detect " + err);
+    console.error(" MongoDB connection error:", err.message);
   });
 
-// Export the app for Vercel
+// Export the app (for serverless platforms like Vercel/Render)
 module.exports = app;
 
-// If running locally (node index.js), start the server
+// Start the server if not in serverless
 if (require.main === module) {
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || 8000; // ✅ use Render’s assigned port
   app.listen(PORT, () => {
-    console.log(`Server running locally on port ${PORT}`);
+    console.log(`this Server running on port ${PORT} (render test v2)`);
   });
 }
