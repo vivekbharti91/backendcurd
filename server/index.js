@@ -10,7 +10,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
+// Enhanced logging middleware
+app.use((req, res, next) => {
+  const timestamp = new Date().toISOString();
+  console.log(`[${timestamp}] ${req.method} ${req.originalUrl}`);
+  next();
+});
+// Root route for sanity check
+app.get('/', (req, res) => {
+  res.send('🚀 Welcome to BackendCURD API. Use /api/website/enquiry/* routes.');
+});
+
+// Enquiry routes
 app.use('/api/website/enquiry', enquiryRouter);
 
 // Connect to MongoDB
